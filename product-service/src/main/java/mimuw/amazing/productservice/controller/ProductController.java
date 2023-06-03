@@ -1,7 +1,7 @@
 package mimuw.amazing.productservice.controller;
 
 import lombok.AllArgsConstructor;
-import mimuw.amazing.productservice.entity.Product;
+import mimuw.amazing.productservice.dto.ProductDto;
 import mimuw.amazing.productservice.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,9 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/create")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         try {
-            Product createdProduct = productService.createProduct(product);
+            ProductDto createdProduct = productService.createProduct(productDto);
             return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -32,16 +32,16 @@ public class ProductController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        Product product = productService.getProduct(id);
-        if (product == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {
+        ProductDto productDto = productService.getProduct(id);
+//        if (productDto == null)
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.getAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
+        List<ProductDto> productDtos = productService.getAllProducts();
+        return new ResponseEntity<>(productDtos, HttpStatus.OK);
     }
 }

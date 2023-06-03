@@ -13,17 +13,16 @@ import lombok.Setter;
 @Entity
 @Table(name = "amazing_product")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Column(length = 100, nullable = false)
+    private String name;
 
-        @Column(length = 100, nullable = false)
-        private String name;
+    @Column(length = 1000)
+    private String description;
 
-        @Column(length = 1000)
-        private String description;
-
-        @Column(nullable = false)
-        private Double price;
+    @Column(nullable = false)
+    private Double price;
 }
