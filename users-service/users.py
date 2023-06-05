@@ -13,9 +13,9 @@ def create_user_table():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
+            username TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
-            money INTEGER NOT NULL
+            money REAL NOT NULL
         )
     ''')
     conn.commit()
@@ -26,26 +26,15 @@ def add_user(username, password):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute('SELECT user_id FROM users WHERE username=?', (username,))
-    user_id = cursor.fetchall()
+    user_id = cursor.fetchone()
     if user_id:
         conn.close()
         return False
 
-    cursor.execute('SELECT user_id FROM users')
-    user_ids = cursor.fetchall()
-    all_ids = []
-    for row in user_ids:
-        all_ids.append(row[0])
-
-    all_ids.sort()
-    new_id = 1
-    if len(all_ids) > 0:
-        new_id = all_ids[-1] + 1
-
     cursor.execute('''
-            INSERT INTO users (user_id, username, password, money)
-            VALUES (?, ?, ?, 0)
-    ''', (new_id, username, password))
+        INSERT INTO users (username, password, money)
+        VALUES (?, ?, 0)
+    ''', (username, password))
 
     conn.commit()
     conn.close()
@@ -67,20 +56,20 @@ def login():
 
     if user_ids:
         user_id = user_ids[0]
-        return jsonify({'message': 'Login successful', 'user_id': user_id})
+        return jsonify({'message': 'Login successful', 'userId': user_id})
     else:
         return jsonify({'message': 'Login failed'}), 401
 
 
 @app.route('/add-money', methods=['POST'])
 def add_money():
-    username = request.json.get('username')
+    user_id = request.json.get('userId')
     amount = request.json.get('amount')
 
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
-    cursor.execute('SELECT money FROM users WHERE username=?', (username,))
+    cursor.execute('SELECT money FROM users WHERE user_id=?', (user_id,))
     current_money = cursor.fetchone()
 
     if current_money is None:
@@ -88,13 +77,34 @@ def add_money():
         return jsonify({'message': 'User not found'}), 404
 
     new_money = current_money[0] + amount
+    if new_money < 0:
+        conn.close()
+        return jsonify({'message' : 'Adding money error', 'new_money' : current_money[0]})
 
-    cursor.execute('UPDATE users SET money=? WHERE username=?',
-                   (new_money, username))
+    cursor.execute('UPDATE users SET money=? WHERE user_id=?',
+                   (new_money, user_id))
     conn.commit()
     conn.close()
 
     return jsonify({'message': 'Money added successfully', 'new_money': new_money})
+
+
+@app.route('/user-data/<int:id>')
+def get_user_info(id):
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT username, money, user_id FROM users WHERE user_id=?', (id,))
+    data = cursor.fetchone()
+
+    conn.close()
+
+    if data is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    username, money, user_id = data
+    return jsonify({'username': username, 'money': money, 'userId': user_id})
+
 
 @app.route('/users-list')
 def users_list():
@@ -102,10 +112,15 @@ def users_list():
     cursor = conn.cursor()
     cursor.execute('SELECT user_id, username, password FROM users')
     data = cursor.fetchall()
-    
-    return jsonify({'data' : data})
+
+    conn.close()
+
+    return jsonify({'data': data})
+
 
 if __name__ == '__main__':
     create_user_table()
-    
+    add_user("admin", "admin")
+    add_user("Wojtek", "Woj")
+    add_user("Greg", "Gre")
     app.run(host='0.0.0.0', port=4000)
