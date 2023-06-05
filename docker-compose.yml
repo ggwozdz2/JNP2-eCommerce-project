@@ -1,0 +1,65 @@
+version: "3"
+
+services:
+    basket-service:
+      build: ./basket-service
+      ports:
+        - 8000:8000
+
+    front:
+      build: ./front
+      ports:
+        - 8080:8080
+
+    warehouse-service:
+        build: ./warehouse-service
+        ports:
+          - 5050:5050
+        environment:
+          - RABBIT=rabbit
+          - DATABASE=warehousedb
+          - MYSQL_USER=root
+          - MYSQL_PASSWORD=root
+
+
+    product-service:
+      build: ./product-service
+      ports:
+        - 6060:6060
+      environment:
+        - DATABASE=products-database
+        - MYSQL_USER=root
+        - MYSQL_PASSWORD=root
+
+# rabbit, used in warehouse-service
+    rabbit:
+      image: rabbitmq:latest
+      ports:
+        - 5672:5672
+        - 15672:15672
+
+# databases
+
+    products-database:
+        image: mysql:latest
+        ports:
+          - 3306:3306
+        environment:
+          - MYSQL_ROOT_PASSWORD=root
+          - MYSQL_DATABASE=productsdb
+          - MYSQL_USER=root
+          - MYSQL_PASSWORD=root
+        volumes:
+          - ./data:/var/lib/mysql
+
+    warehouse-database:
+      image: mysql:latest
+      ports:
+        - 3307:3306
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=warehousedb
+        - MYSQL_USER=root
+        - MYSQL_PASSWORD=root
+      volumes:
+        - ./data/warehouse:/var/lib/mysql
