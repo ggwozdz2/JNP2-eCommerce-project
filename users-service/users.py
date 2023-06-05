@@ -103,12 +103,9 @@ def users_list():
     cursor.execute('SELECT user_id, username, password FROM users')
     data = cursor.fetchall()
     
-    dataJSON = json.dumps(data)
-    return dataJSON
-
+    return jsonify({'data' : data})
 
 if __name__ == '__main__':
     create_user_table()
-    # add_user("Wojtek", "Woj")
-    # add_user("Gregoire", "Van der Gwoz")
+    
     app.run(host='0.0.0.0', port=4000)
