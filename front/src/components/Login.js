@@ -32,6 +32,7 @@ const Login = () => {
       localStorage.setItem('userId', data.userId);
 
       navigate('/');
+      window.location.reload();
       // Handle successful login, e.g., store user session, redirect to dashboard, etc.
     } else {
       const errorData = await response.json();

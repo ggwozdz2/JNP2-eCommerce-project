@@ -7,13 +7,22 @@ import Login from "./components/Login";
 import amazing_logo from "./amazing_logo.png";
 import { useNavigate } from 'react-router-dom';
 
-function Logout() {
+function LogoutButton() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
     localStorage.removeItem('userId');
-    const navigate = useNavigate();
     navigate('/');
+    window.location.reload();
+  };
+
+  return (
+    <div onClick={handleLogout}>Logout</div>
+  );
 }
 
 function App() {
+
   const userId = localStorage.getItem('userId');
   return (
     <div className="App">
@@ -29,7 +38,7 @@ function App() {
           <div className="Menu-bar-button">
                     {
                           userId ? (
-                                <div onClick={Logout}>Logout</div>
+                                <LogoutButton />
                            ) : (
                                 <Link to={'/login'}>
                                             Login
