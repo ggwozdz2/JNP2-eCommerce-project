@@ -1,16 +1,16 @@
 package mimuw.amazing.productservice.service;
 
-import mimuw.amazing.productservice.entity.Product;
+import mimuw.amazing.productservice.dto.ProductDto;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {
-    Product createProduct(Product product) throws IOException;
+    ProductDto createProduct(ProductDto productDto) throws IOException;
 
     void deleteProduct(Long id);
 
-    Product getProduct(Long id);
+    ProductDto getProduct(Long id);
 
-    List<Product> getAllProducts();
+    List<ProductDto> getAllProducts();
 }
