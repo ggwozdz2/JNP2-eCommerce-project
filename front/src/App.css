@@ -1,38 +1,157 @@
-.App {
-  text-align: center;
+:root {
+  --primary-color: white;
+  --secondary-color: black;
+  --content-background-color: #E3E6E6;
+  --header-background-color: #232f3e;
 }
 
-/*.App-logo {*/
-/*  height: 40vmin;*/
-/*  pointer-events: none;*/
-/*}*/
+a {
+  text-decoration: none;
+}
 
-/*@media (prefers-reduced-motion: no-preference) {*/
-/*  .App-logo {*/
-/*    animation: App-logo-spin infinite 20s linear;*/
-/*  }*/
-/*}*/
+.App {
+  text-align: center;
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "content";
+  height: 100vh;
+  width: 100vw;
+}
 
-/*.App-header {*/
-/*  background-color: #282c34;*/
-/*  min-height: 100vh;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*  font-size: calc(10px + 2vmin);*/
-/*  color: white;*/
-/*}*/
+.App-header {
+  grid-area: header;
+  background-color: var(--header-background-color);
+  color: var(--primary-color);
+  padding: 10px;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 
-/*.App-link {*/
-/*  color: #61dafb;*/
-/*}*/
+.App-content {
+  grid-area: content;
+  background-color: var(--content-background-color);
+  color: var(--secondary-color);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  overflow: auto;
+}
 
-/*@keyframes App-logo-spin {*/
-/*  from {*/
-/*    transform: rotate(0deg);*/
-/*  }*/
-/*  to {*/
-/*    transform: rotate(360deg);*/
-/*  }*/
-/*}*/
+.Menu-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.Logo-button {
+  height: 30px;
+  cursor: pointer;
+}
+
+.Menu-bar-button {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid var(--header-background-color);
+}
+
+.Menu-bar-button:hover {
+  border: 1px solid var(--primary-color);
+}
+
+.Product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border-radius: 20px;
+  width: 300px;
+  height: 70px;
+}
+
+.Product-card-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.Product-card-price {
+  font-size: 20px;
+  color: red;
+}
+
+.Product-site {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  display: grid;
+  grid-template-columns: 4fr minmax(220px, 1fr);
+  grid-template-rows: 1fr;
+  grid-template-areas: "left right";
+  padding: 10px 0;
+  max-width: 1000px;
+}
+
+.Product-site-left {
+  grid-area: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.Product-site-right {
+  grid-area: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-left: 1px solid var(--secondary-color);
+}
+
+.Product-name {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.Product-description {
+  font-size: 20px;
+}
+
+.Product-price {
+  font-size: 30px;
+  color: red;
+}
+
+.Product-button {
+  height: 40px;
+  padding: 0 15px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: #f36808;
+  color: var(--primary-color);
+  border-radius: 20px;
+}

@@ -1,8 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import '../App.css'
-import BackToHome from "./BackToHome"
-import {Link, useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 
 export function withRouter(Children) {
   return (props) => {
@@ -41,14 +40,23 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>
-          Id: {this.state.id} <br/>
-          Name: {this.state.name} <br/>
-          Description: {this.state.description} <br/>
-          Price: {this.state.price}
-        </p>
-        <BackToHome />
+      <div className='Product-site'>
+        <div className='Product-site-left'>
+          <div className='Product-name'>
+            {this.state.name}
+          </div>
+          <div className='Product-description'>
+            {this.state.description}
+          </div>
+        </div>
+        <div className='Product-site-right'>
+          <div className='Product-price'>
+            {this.state.price} zł
+          </div>
+          <div className='Product-button'>
+            Add to basket
+          </div>
+        </div>
       </div>
     )
   }
