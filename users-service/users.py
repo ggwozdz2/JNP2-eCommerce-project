@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import json
 import sqlite3
 
 app = Flask(__name__)
+CORS(app)
 
 DATABASE = 'users.db'
 
@@ -58,7 +60,7 @@ def login():
         user_id = user_ids[0]
         return jsonify({'message': 'Login successful', 'userId': user_id})
     else:
-        return jsonify({'message': 'Login failed'}), 401
+        return jsonify({'message': 'Login failed', 'userId' : -1})
 
 
 @app.route('/add-money', methods=['POST'])

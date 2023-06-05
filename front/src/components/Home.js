@@ -15,7 +15,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     axios
-      .get('/api/products/all')
+      .get('http://localhost:8080/api/products/all')
       .then((response) => {
         this.setState({
           products: response.data,
@@ -28,8 +28,17 @@ class Home extends React.Component {
   }
 
   render() {
+    const userId = localStorage.getItem('userId');
+
     return (
       <div className="App-content">
+        {
+              userId ? (
+                    <p>Logged in user ID: {userId}</p>
+               ) : (
+                    <p>User ID not found</p>
+              )
+        }
         {this.state.products.map((product) => {
           return (
             <div key={product.id}>

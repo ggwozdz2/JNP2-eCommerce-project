@@ -69,6 +69,10 @@ a {
   border: 1px solid var(--header-background-color);
 }
 
+.Menu-bar-button > a {
+    color: white;
+}
+
 .Menu-bar-button:hover {
   border: 1px solid var(--primary-color);
 }

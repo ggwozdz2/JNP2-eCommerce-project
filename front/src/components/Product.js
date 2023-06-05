@@ -24,7 +24,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     axios
-      .get('/api/products/get/' + this.props.match.params.id)
+      .get('http://localhost:8080/api/products/get/' + this.props.match.params.id)
       .then((response) => {
         this.setState({
           id: response.data.id,

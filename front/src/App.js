@@ -3,9 +3,18 @@ import { Link, Routes, Route } from 'react-router-dom';
 import React from "react";
 import Home from "./components/Home";
 import Product from "./components/Product";
+import Login from "./components/Login";
 import amazing_logo from "./amazing_logo.png";
+import { useNavigate } from 'react-router-dom';
+
+function Logout() {
+    localStorage.removeItem('userId');
+    const navigate = useNavigate();
+    navigate('/');
+}
 
 function App() {
+  const userId = localStorage.getItem('userId');
   return (
     <div className="App">
       <div className="App-header">
@@ -18,7 +27,16 @@ function App() {
         </div>
         <div className="Menu-bar">
           <div className="Menu-bar-button">
-            Login
+                    {
+                          userId ? (
+                                <div onClick={Logout}>Logout</div>
+                           ) : (
+                                <Link to={'/login'}>
+                                            Login
+                                            </Link>
+                          )
+                    }
+
           </div>
           <div className="Menu-bar-button">
             Basket
@@ -37,6 +55,7 @@ function Main() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/product/:id" element={<Product />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   );
 }
