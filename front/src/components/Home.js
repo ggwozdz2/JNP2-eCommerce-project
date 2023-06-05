@@ -29,13 +29,18 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="App-content">
         {this.state.products.map((product) => {
           return (
             <div key={product.id}>
               <Link to={'/product/' + product.id}>
-                <div className='App-button'>
-                  {product.name} {product.price}
+                <div className='Product-card'>
+                  <div className='Product-card-name'>
+                    {product.name}
+                  </div>
+                  <div className='Product-card-price'>
+                    {product.price} zł
+                  </div>
                 </div>
               </Link>
             </div>
