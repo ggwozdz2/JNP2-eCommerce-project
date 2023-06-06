@@ -3,6 +3,7 @@ import { Link, Routes, Route } from 'react-router-dom';
 import React from "react";
 import Home from "./components/Home";
 import Product from "./components/Product";
+import Basket from "./components/Basket";
 import Login from "./components/Login";
 import amazing_logo from "./amazing_logo.png";
 import { useNavigate } from 'react-router-dom';
@@ -35,20 +36,20 @@ function App() {
           </div>
         </div>
         <div className="Menu-bar">
+          {
+            userId ? (<p>Logged in user ID: {userId}</p>)
+                   : (<p>User ID not found</p>)
+          }
           <div className="Menu-bar-button">
-                    {
-                          userId ? (
-                                <LogoutButton />
-                           ) : (
-                                <Link to={'/login'}>
-                                            Login
-                                            </Link>
-                          )
-                    }
-
+            {
+              userId ? (<LogoutButton />) 
+                     : (<Link to={'/login'}>Login</Link>)
+            }
           </div>
           <div className="Menu-bar-button">
-            Basket
+            <Link to={'/basket'}>
+                Basket
+            </Link>
           </div>
         </div>
       </div>
@@ -65,6 +66,7 @@ function Main() {
       <Route path="/" element={<Home />} />
       <Route path="/product/:id" element={<Product />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/basket" element={<Basket />} />
     </Routes>
   );
 }

@@ -10,6 +10,23 @@ export function withRouter(Children) {
   }
 }
 
+function AddProductToBasket(productId) {
+  if (!localStorage.getItem('userId')) {
+    return;
+  }
+  axios
+    .post('http://localhost:8081/api/baskets/create', {
+        userId: localStorage.getItem('userId'),
+        productId: productId,
+    })
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -53,7 +70,7 @@ class Home extends React.Component {
           <div className='Product-price'>
             {this.state.price} zł
           </div>
-          <div className='Product-button'>
+          <div className='Product-button' onClick={() => AddProductToBasket(this.state.id)}>
             Add to basket
           </div>
         </div>
