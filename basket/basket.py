@@ -16,7 +16,9 @@ def create_baskets_table():
         CREATE TABLE IF NOT EXISTS baskets (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             userId INTEGER NOT NULL,
-            productId INTEGER NOT NULL
+            productId INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            price REAL NOT NULL
         )
     ''')
     conn.commit()
@@ -24,17 +26,22 @@ def create_baskets_table():
 
 @app.route('/api/baskets/create', methods=['POST'])
 def create_basket():
-    userId = request.json.get('userId')
-    productId = request.json.get('productId')
+    user_id = request.json.get('userId')
+    product_id = request.json.get('productId')
+    
+    response = requests.get('http://localhost:8080/api/products/get/' + str(product_id))
+    productJSON = response.json()
+    name = productJSON['name']
+    price = productJSON['price']
 
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
     cursor.execute(
         '''
-        INSERT INTO baskets (userId, productId)
-         VALUES(?, ?)
-        ''', (userId, productId))
+        INSERT INTO baskets (userId, productId, name, price)
+         VALUES(?, ?, ?, ?)
+        ''', (user_id, product_id, name, price))
     
     #user_ids = cursor.fetchone()
     
@@ -43,7 +50,7 @@ def create_basket():
 
     return jsonify({'message': 'Basket created successfully'})
 
-@app.route('/api/baskets/delete/<int:basket_id>', methods=['DELETE'])
+@app.route('/api/baskets/delete/<int:basket_id>', methods=['GET'])
 def delete_basket(basket_id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -71,7 +78,9 @@ def get_all_baskets():
         basketJSON = {
             'id': basket[0],
             'userId': basket[1],
-            'productId': basket[2]
+            'productId': basket[2],
+            'name': basket[3],
+            'price': basket[4]
         }
         dataJSON.append(basketJSON)
 
@@ -90,10 +99,13 @@ def get_user_basket(user_id):
 
     dataJSON = []
     for basket in baskets:
-        product_id = basket[2]
-        response = requests.get('http://localhost:8080/api/products/get/' + str(product_id))
-        productJSON = response.json()
-        dataJSON.append(productJSON)
+        basketJSON = {
+            'id': basket[0],
+            'productId': basket[2],
+            'name': basket[3],
+            'price': basket[4]
+        }
+        dataJSON.append(basketJSON)
 
     return jsonify(dataJSON)
 

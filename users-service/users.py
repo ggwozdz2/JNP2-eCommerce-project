@@ -67,6 +67,7 @@ def login():
 def add_money():
     user_id = request.json.get('userId')
     amount = request.json.get('amount')
+    amount = float(amount)
 
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -79,6 +80,7 @@ def add_money():
         return jsonify({'message': 'User not found'}), 404
 
     new_money = current_money[0] + amount
+    new_money = round(new_money, 2)
     if new_money < 0:
         conn.close()
         return jsonify({'message' : 'Adding money error', 'new_money' : current_money[0]})
@@ -105,6 +107,7 @@ def get_user_info(id):
         return jsonify({'message': 'User not found'}), 404
 
     username, money, user_id = data
+    money = round(money, 2)
     return jsonify({'username': username, 'money': money, 'userId': user_id})
 
 

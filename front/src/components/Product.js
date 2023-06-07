@@ -1,12 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 import '../App.css'
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 export function withRouter(Children) {
   return (props) => {
-    const match = {params: useParams()}
-    return <Children {...props} match={match}/>
+    const match = { params: useParams() }
+    return <Children {...props} match={match} />
   }
 }
 
@@ -16,8 +16,8 @@ function AddProductToBasket(productId) {
   }
   axios
     .post('http://localhost:8081/api/baskets/create', {
-        userId: localStorage.getItem('userId'),
-        productId: productId,
+      userId: localStorage.getItem('userId'),
+      productId: productId,
     })
     .then((response) => {
       console.log(response)
@@ -25,6 +25,10 @@ function AddProductToBasket(productId) {
     .catch((error) => {
       console.log(error)
     })
+  document.getElementById('Announcement').style.visibility = 'visible'
+  // setTimeout(() => {
+  //   document.getElementById('Announcement').style.visibility = 'hidden'
+  // }, 2000)
 }
 
 class Home extends React.Component {
@@ -70,9 +74,18 @@ class Home extends React.Component {
           <div className='Product-price'>
             {this.state.price} zł
           </div>
-          <div className='Product-button' onClick={() => AddProductToBasket(this.state.id)}>
-            Add to basket
-          </div>
+          {
+            localStorage.getItem('userId') ? (
+              <div className='Product-button' onClick={() => AddProductToBasket(this.state.id)}>
+                Add to basket
+              </div>
+            ) : (
+              <div className='Product-button-disabled'>
+                Add to basket
+              </div>
+            )
+          }
+          <div id='Announcement' style={{ visibility: 'hidden' }}>Product added to basket</div>
         </div>
       </div>
     )

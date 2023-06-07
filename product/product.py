@@ -44,7 +44,7 @@ def create_product():
 
     return jsonify({'message': 'Product created successfully'})
 
-@app.route('/api/products/delete/<int:product_id>', methods=['DELETE'])
+@app.route('/api/products/delete/<int:product_id>', methods=['GET'])
 def delete_product(product_id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
