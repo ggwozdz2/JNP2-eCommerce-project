@@ -3,10 +3,12 @@
   --secondary-color: black;
   --content-background-color: #E3E6E6;
   --header-background-color: #232f3e;
+  --button-color: #f36808;
 }
 
 a {
   text-decoration: none;
+  color: var(--primary-color);
 }
 
 .App {
@@ -19,6 +21,7 @@ a {
     "content";
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 }
 
 .App-header {
@@ -37,13 +40,15 @@ a {
   grid-area: content;
   background-color: var(--content-background-color);
   color: var(--secondary-color);
-  padding: 10px;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
   overflow: auto;
+  box-sizing: content-box;
 }
 
 .Menu-bar {
@@ -60,45 +65,107 @@ a {
 
 .Menu-bar-button {
   height: 30px;
+  width: 80px;
   padding: 0 10px;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background-color: var(--button-color);
+  color: var(--primary-color);
   border: 1px solid var(--header-background-color);
-}
-
-.Menu-bar-button > a {
-    color: white;
+  border-radius: 20px;
 }
 
 .Menu-bar-button:hover {
   border: 1px solid var(--primary-color);
 }
 
-.Product-card {
+.Menu-bar-button-disabled {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--button-color);
+  color: var(--primary-color);
+  border: 1px solid var(--header-background-color);
+  border-radius: 20px;
+  opacity: 0.5;
+}
+
+.Menu-bar-button-disabled:hover {
+  border: 1px solid var(--header-background-color);
+}
+
+.Products-list {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.Card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
   padding: 10px;
   background-color: var(--primary-color);
   color: var(--secondary-color);
   border-radius: 20px;
-  width: 300px;
-  height: 70px;
+  width: 400px;
+  min-height: 70px;
 }
 
-.Product-card-name {
+.Card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.Card-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.Card-name {
+  display: flex;
   font-size: 16px;
   font-weight: bold;
 }
 
-.Product-card-price {
+.Card-price {
   font-size: 20px;
   color: red;
+}
+
+.Card-button {
+  height: 30px;
+  width: 80px;
+  padding: 0 10px;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--button-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 15px;
+}
+
+.Card-button:hover {
+  border: 1px solid var(--secondary-color);
 }
 
 .Product-site {
@@ -149,13 +216,45 @@ a {
 
 .Product-button {
   height: 40px;
+  width: 100px;
   padding: 0 15px;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background: #f36808;
+  background: var(--button-color);
   color: var(--primary-color);
+  border: 1px solid var(--primary-color);
   border-radius: 20px;
+}
+
+.Product-button:hover {
+  border: 1px solid var(--secondary-color);
+}
+
+.Product-button-disabled {
+  height: 40px;
+  padding: 0 15px;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--button-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 20px;
+  opacity: 0.5;
+}
+
+.Product-button-disabled:hover {
+  border: 1px solid var(--primary-color);
+}
+
+.Container-with-description {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
 }

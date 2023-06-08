@@ -44,7 +44,7 @@ def create_product():
 
     return jsonify({'message': 'Product created successfully'})
 
-@app.route('/api/products/delete/<int:product_id>', methods=['DELETE'])
+@app.route('/api/products/delete/<int:product_id>', methods=['GET'])
 def delete_product(product_id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -85,6 +85,8 @@ def get_all_products():
 
     cursor.execute('SELECT * FROM products')
     products = cursor.fetchall()
+
+    conn.close()
     
     dataJSON = []
 
@@ -92,7 +94,7 @@ def get_all_products():
         productJSON = {
             "id": product[0],
             "name": product[1],
-            "description": product[2],
+            # "description": product[2],
             "price": product[3]
         }
         dataJSON.append(productJSON)

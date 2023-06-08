@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import '../App.css'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 // import BackToHome from "./BackToHome";
 
 class Home extends React.Component {
@@ -32,29 +32,29 @@ class Home extends React.Component {
 
     return (
       <div className="App-content">
-        {
-              userId ? (
-                    <p>Logged in user ID: {userId}</p>
-               ) : (
-                    <p>User ID not found</p>
-              )
-        }
-        {this.state.products.map((product) => {
-          return (
-            <div key={product.id}>
-              <Link to={'/product/' + product.id}>
-                <div className='Product-card'>
-                  <div className='Product-card-name'>
+        <div className="Products-list">
+          {this.state.products.map((product) => {
+            return (
+              <div className='Card' key={product.id}>
+                <div className='Card-info'>
+                  <div className='Card-name'>
                     {product.name}
                   </div>
-                  <div className='Product-card-price'>
+                  <div className='Card-price'>
                     {product.price} zł
                   </div>
                 </div>
-              </Link>
-            </div>
-          )
-        })}
+                <div className='Card-actions'>
+                  <Link to={'/product/' + product.id}>
+                    <div className='Card-button'>
+                      Details
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }
