@@ -82,28 +82,8 @@ def add_product_to_warehouse():
     product_id = request.json.get('product_id')
     quantity = request.json.get('quantity')
 
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
+    send_message_to_queue(product_id, quantity)
 
-    cursor.execute(
-        'SELECT product_id, quantity FROM warehouse WHERE product_id = ?', (product_id, ))
-    products = cursor.fetchone()
-
-    if not products:
-        cursor.execute(
-            '''
-            INSERT INTO warehouse (product_id, quantity)
-            VALUES (?, ?)
-            ''', (product_id, quantity))
-    else:
-        cursor.execute(
-            '''
-            UPDATE warehouse SET quantity=?
-            WHERE product_id=?
-            ''', (products[1]+quantity, product_id))
-
-    conn.commit()
-    conn.close()
     return jsonify({'message': 'Product added to warehouse'})
 
 if __name__ == '__main__':
