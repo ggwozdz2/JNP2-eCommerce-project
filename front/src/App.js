@@ -42,7 +42,7 @@ function App() {
         <div className="Menu-bar">       
           {
             userId === "1" && (
-              <Link to={'/add-warehouse'}>
+              <Link to={'/warehouse'}>
                 <div className="Menu-bar-button">
                   Warehouse
                 </div>
@@ -99,7 +99,7 @@ function Main() {
       <Route path="/login" element={<Login />} />
       <Route path="/basket" element={<Basket />} />
       <Route path="/user" element={<User />} />
-      <Route path="/add-warehouse" element={<Warehouse />} />
+      <Route path="/warehouse" element={<Warehouse />} />
       <Route path="/add-product" element={<NewProduct />} />
     </Routes>
   );
