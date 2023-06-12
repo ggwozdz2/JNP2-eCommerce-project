@@ -78,6 +78,22 @@ a {
   border-radius: 20px;
 }
 
+.Submit-button {
+  height: auto;
+  width: 100px;
+  padding: 0 10px;
+  font-size: 15px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--button-color);
+  color: var(--primary-color);
+  border: 1px solid var(--header-background-color);
+  border-radius: 20px;
+  margin: 0 auto; /* Center the button horizontally */
+}
+
 .Menu-bar-button:hover {
   border: 1px solid var(--primary-color);
 }

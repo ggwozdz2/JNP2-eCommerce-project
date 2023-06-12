@@ -79,9 +79,17 @@ def send_message_to_queue(product_id, quantity):
 # this uses RabbitMQ
 @app.route('/api/warehouse/add', methods=['POST'])
 def add_product_to_warehouse():
-    product_id = request.json.get('product_id')
-    quantity = request.json.get('quantity')
+    try:
+        product_id = int(request.json.get('product_id'))
+        quantity = int(request.json.get('quantity'))
+    except:
+        return jsonify({'message': "Couldn't add product to database"})
 
+    if (product_id is None or quantity is None or not 
+        isinstance(product_id, int) or not isinstance(quantity, int)):
+        return jsonify({'message': "Couldn't add product to database"})
+
+    
     send_message_to_queue(product_id, quantity)
 
     return jsonify({'message': 'Product added to warehouse'})
