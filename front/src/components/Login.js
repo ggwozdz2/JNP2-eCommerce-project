@@ -20,7 +20,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-    localStorage.setItem('message', '');
 
     const response = await fetch('http://localhost:4000/login', {
       method: 'POST',

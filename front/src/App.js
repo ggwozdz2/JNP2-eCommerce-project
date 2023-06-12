@@ -7,6 +7,7 @@ import Basket from "./components/Basket";
 import Login from "./components/Login";
 import User from "./components/User";
 import Warehouse from './components/Warehouse';
+import NewProduct from './components/NewProduct';
 import amazing_logo from "./amazing_logo.png";
 import { useNavigate } from 'react-router-dom';
 
@@ -38,12 +39,7 @@ function App() {
             </Link>
           </div>
         </div>
-        <div className="Menu-bar">
-          {
-            userId ? (<p>Logged in user ID: {userId}</p>)
-              : (<p>User ID not found</p>)
-          }
-          
+        <div className="Menu-bar">       
           {
             userId === "1" && (
               <Link to={'/add-warehouse'}>
@@ -104,6 +100,7 @@ function Main() {
       <Route path="/basket" element={<Basket />} />
       <Route path="/user" element={<User />} />
       <Route path="/add-warehouse" element={<Warehouse />} />
+      <Route path="/add-product" element={<NewProduct />} />
     </Routes>
   );
 }
