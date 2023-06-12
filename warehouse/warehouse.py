@@ -23,8 +23,8 @@ def create_warehouse_table():
     conn.close()
 
 
-@app.route('/api/warehouse/get', methods=['POST'])
-def get_warehouse_products():
+@app.route('/api/warehouse/take', methods=['POST'])
+def take_warehouse_products():
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
