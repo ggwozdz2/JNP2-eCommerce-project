@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../App.css';
+import {Link} from "react-router-dom";
 // import BackToHome from "./BackToHome";
 
 function AddProduct({ productID, quantity }) {
@@ -80,9 +81,14 @@ class Warehouse extends React.Component {
         };
 
         return (
-            <>
+            <div>
                 {userId === "1" ? (
-                    <div>
+                    <div className='App-content'>
+                        <Link to={'/add-product'}>
+                            <div className="Product-button">
+                                Create Product
+                            </div>
+                        </Link>
                         <h2>Add Product to Warehouse</h2>
                         <form>
                             <div>
@@ -116,7 +122,7 @@ class Warehouse extends React.Component {
                         </div>
                     </div>
                 ) : (<div>No permission</div>)}
-            </>
+            </div>
         );
     }
 }

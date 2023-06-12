@@ -31,12 +31,17 @@ def create_product():
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
-    cursor.execute(
-        '''
-        INSERT INTO products (name, description, price)
-         VALUES(?, ?, ?)
-        ''', (name, description, price))
-    
+    try:
+        cursor.execute(
+            '''
+            INSERT INTO products (name, description, price)
+            VALUES(?, ?, ?)
+            ''', (name, description, price))
+    except:
+        conn.commit()
+        conn.close()
+        return jsonify({'message': 'Error, product not created'})
+
     #user_ids = cursor.fetchone()
     
     conn.commit()
