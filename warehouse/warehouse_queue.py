@@ -27,7 +27,7 @@ def process_message(channel, method, properties, body):
     else:
         cursor.execute(
             'UPDATE warehouse SET quantity = ? WHERE product_id = ?',
-            (products[1] + quantity, product_id)
+            (products[1] + int(quantity), product_id)
         )
 
     conn.commit()
