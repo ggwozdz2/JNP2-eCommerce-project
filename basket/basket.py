@@ -28,6 +28,16 @@ def create_baskets_table():
 def create_basket():
     user_id = request.json.get('userId')
     product_id = request.json.get('productId')
+
+    data = {
+        "product_id" : product_id,
+        "quantity": 1
+    }
+    response = requests.post('http://localhost:8082/api/warehouse/take', json=data)
+
+    if response.status_code == 400:
+        responseJSON = response.json()
+        return jsonify({'message' : responseJSON['error']})
     
     response = requests.get('http://localhost:8080/api/products/get/' + str(product_id))
     productJSON = response.json()
@@ -54,6 +64,21 @@ def create_basket():
 def delete_basket(basket_id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
+
+    cursor.execute('SELECT productId FROM baskets WHERE id = ?', (basket_id,))
+
+    product = cursor.fetchone()
+
+    if product is not None:
+        product_id = product[0]
+        data = {
+            "product_id" : product_id,
+            "quantity" : 1
+        }
+        response = requests.post('http://localhost:8082/api/warehouse/add', json=data)
+        if response.status_code != 200:
+            print("Kłopoty")
+            return
 
     cursor.execute('DELETE FROM baskets WHERE id = ?', (basket_id,))
 
@@ -108,6 +133,14 @@ def get_user_basket(user_id):
         dataJSON.append(basketJSON)
 
     return jsonify(dataJSON)
+
+####################
+
+    
+
+    return jsonify({'message' : 'Getting succesful', 'product_id' : product_id})
+###############3
+
 
 if __name__ == '__main__':
     create_baskets_table()

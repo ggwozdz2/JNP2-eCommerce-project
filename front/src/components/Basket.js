@@ -52,7 +52,7 @@ class Basket extends React.Component {
   }
 
   render() {
-    const userId = localStorage.getItem('userId');
+    //const userId = localStorage.getItem('userId');
 
     return (
       <div className="App-content">

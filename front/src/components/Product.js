@@ -21,14 +21,14 @@ function AddProductToBasket(productId) {
     })
     .then((response) => {
       console.log(response)
+      const message = response.data.message
+      document.getElementById('Announcement').innerText = message;
     })
     .catch((error) => {
-      console.log(error)
+
+      document.getElementById('Announcement').innerText = "Unknown error";
     })
   document.getElementById('Announcement').style.visibility = 'visible'
-  // setTimeout(() => {
-  //   document.getElementById('Announcement').style.visibility = 'hidden'
-  // }, 2000)
 }
 
 class Home extends React.Component {
@@ -85,7 +85,7 @@ class Home extends React.Component {
               </div>
             )
           }
-          <div id='Announcement' style={{ visibility: 'hidden' }}>Product added to basket</div>
+          <div id='Announcement' style={{ visibility: 'hidden' }}>Adding...</div>
         </div>
       </div>
     )
