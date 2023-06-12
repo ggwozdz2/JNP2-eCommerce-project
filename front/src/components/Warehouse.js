@@ -10,6 +10,8 @@ const Warehouse = () => {
     const [quantity, setQuantity] = useState('');
     const [message, setMessage] = useState('');
 
+    localStorage.setItem('message', '');
+
     const handleAddProduct = () => {
         const productData = {
             product_id: productID,

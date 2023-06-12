@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import '../App.css'
 import { Link, useNavigate } from "react-router-dom";
@@ -6,8 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 function DeleteFromBasket(basketId) {
   const navigate = useNavigate();
 
-  const handleDeleteFromBasket = () => {
-    axios
+  const handleDeleteFromBasket = async () => {
+    await axios
       .get('http://localhost:8081/api/baskets/delete/' + basketId.basketId)
       .then((response) => {
         console.log(response)
@@ -16,12 +16,38 @@ function DeleteFromBasket(basketId) {
         console.log(error)
       })
 
+    localStorage.setItem('message', 'Product removed from basket');
     navigate('/basket');
     window.location.reload();
   };
 
   return (
     <div className="Card-button" onClick={handleDeleteFromBasket}>Remove</div>
+  );
+}
+
+function SubmitOrder() {
+  const navigate = useNavigate();
+
+  const handleOrder = async () => {
+    await axios
+      .get('http://localhost:8081/api/baskets/submit-order/' + localStorage.getItem('userId'))
+      .then((response) => {
+        console.log(response);
+        console.log(response.data.message);
+        localStorage.setItem('message', response.data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("Zle");
+      })
+
+    navigate('/basket');
+    window.location.reload();
+  };
+
+  return (
+    <div className="Product-button" onClick={handleOrder}>Buy now</div>
   );
 }
 
@@ -34,11 +60,11 @@ class Basket extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (!localStorage.getItem('userId')) {
       return;
     }
-    axios
+    await axios
       .get('http://localhost:8081/api/baskets/user-basket/' + localStorage.getItem('userId'))
       .then((response) => {
         this.setState({
@@ -53,10 +79,29 @@ class Basket extends React.Component {
 
   render() {
     const userId = localStorage.getItem('userId');
+    const message = localStorage.getItem('message');
+    if (message === null) {
+      localStorage.setItem('message', '');
+    }
+
+    var totalPrice = this.state.products.reduce((total, product) => total + product.price, 0);
+    totalPrice = Math.round(totalPrice * 100) / 100;
 
     return (
       <div className="App-content">
         <div className="Products-list">
+          <div className='Card'>
+            <div className='Card-info'>
+              <div className='Card-info' style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <div className='Card-name'>Total cost: </div>
+                <div className='Card-price'>{totalPrice} zł</div>
+              </div>
+              <div className='Announcement' id='Message'>{message}</div>
+            </div>
+            <div className='Card-actions'>
+              <SubmitOrder />
+            </div>
+          </div>
           {
             this.state.products.length > 0 ? (
               this.state.products.map((product) => {
