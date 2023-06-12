@@ -6,6 +6,7 @@ import Product from "./components/Product";
 import Basket from "./components/Basket";
 import Login from "./components/Login";
 import User from "./components/User";
+import Warehouse from './components/Warehouse';
 import amazing_logo from "./amazing_logo.png";
 import { useNavigate } from 'react-router-dom';
 
@@ -26,6 +27,7 @@ function LogoutButton() {
 function App() {
 
   const userId = localStorage.getItem('userId');
+  
   return (
     <div className="App">
       <div className="App-header">
@@ -41,6 +43,17 @@ function App() {
             userId ? (<p>Logged in user ID: {userId}</p>)
               : (<p>User ID not found</p>)
           }
+          
+          {
+            userId === "1" && (
+              <Link to={'/add-warehouse'}>
+                <div className="Menu-bar-button">
+                  Warehouse
+                </div>
+              </Link>
+            ) 
+          }
+
           {
             userId ? (
               <Link to={'/user'}>
@@ -90,6 +103,7 @@ function Main() {
       <Route path="/login" element={<Login />} />
       <Route path="/basket" element={<Basket />} />
       <Route path="/user" element={<User />} />
+      <Route path="/add-warehouse" element={<Warehouse />} />
     </Routes>
   );
 }
