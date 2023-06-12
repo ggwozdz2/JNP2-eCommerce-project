@@ -4,6 +4,8 @@ import '../App.css';
 // import BackToHome from "./BackToHome";
 
 function AddProduct({ productID, quantity }) {
+    const [message, setMessage] = useState('');
+
     const handleAddProduct = () => {
         const productData = {
             product_id: productID,
@@ -13,20 +15,23 @@ function AddProduct({ productID, quantity }) {
         axios
             .post('http://localhost:8082/api/warehouse/add', productData)
             .then((response) => {
-                const message = response.data.message;
-                console.log(message);
+                const message2 = response.data.message;
+                console.log(message2);
+                setMessage(message2);
             })
             .catch((error) => {
                 console.error('Error adding product:', error);
-                // setMessage('Error adding product');
+                setMessage('Error adding product');
             });
     };
 
     return (
-        <div className="Submit-button" onClick={handleAddProduct}>
-            Add Product
+        <div>
+            <div className="Submit-button" onClick={handleAddProduct}>
+                Add Product
+            </div>
+            {message && <p>{message}</p>}
         </div>
-        // message && <p>message</p>
     );
 }
 
