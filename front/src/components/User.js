@@ -68,14 +68,16 @@ class User extends React.Component {
   constructor(props) {
     super(props)
 
+    localStorage.setItem('message', '');
+
     this.state = {
       username: '',
       money: 0,
     }
   }
 
-  componentDidMount() {
-    axios
+  async componentDidMount() {
+    await axios
       .get('http://localhost:4000/user-data/' + localStorage.getItem('userId'))
       .then((response) => {
         this.setState({

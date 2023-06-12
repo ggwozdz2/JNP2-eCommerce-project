@@ -10,11 +10,11 @@ export function withRouter(Children) {
   }
 }
 
-function AddProductToBasket(productId) {
+async function AddProductToBasket(productId) {
   if (!localStorage.getItem('userId')) {
     return;
   }
-  axios
+  await axios
     .post('http://localhost:8081/api/baskets/create', {
       userId: localStorage.getItem('userId'),
       productId: productId,
@@ -31,9 +31,11 @@ function AddProductToBasket(productId) {
   document.getElementById('Announcement').style.visibility = 'visible'
 }
 
-class Home extends React.Component {
+class Product extends React.Component {
   constructor(props) {
     super(props)
+
+    localStorage.setItem('message', '');
 
     this.state = {
       id: 0,
@@ -43,8 +45,8 @@ class Home extends React.Component {
     }
   }
 
-  componentDidMount() {
-    axios
+  async componentDidMount() {
+    await axios
       .get('http://localhost:8080/api/products/get/' + this.props.match.params.id)
       .then((response) => {
         this.setState({
@@ -92,4 +94,4 @@ class Home extends React.Component {
   }
 }
 
-export default withRouter(Home)
+export default withRouter(Product)

@@ -2,19 +2,20 @@ import React from 'react'
 import axios from 'axios'
 import '../App.css'
 import { Link } from "react-router-dom";
-// import BackToHome from "./BackToHome";
 
 class Home extends React.Component {
   constructor(props) {
     super(props)
+
+    localStorage.setItem('message', '');
 
     this.state = {
       products: [],
     }
   }
 
-  componentDidMount() {
-    axios
+  async componentDidMount() {
+    await axios
       .get('http://localhost:8080/api/products/all')
       .then((response) => {
         this.setState({

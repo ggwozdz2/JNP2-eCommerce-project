@@ -6,6 +6,8 @@ import '../App.css';
 function AddProduct({ productID, quantity }) {
     const [message, setMessage] = useState('');
 
+    localStorage.setItem('message', '');
+
     const handleAddProduct = () => {
         const productData = {
             product_id: productID,
