@@ -5,6 +5,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -29,10 +30,15 @@ const Login = () => {
     if (response.ok) {
       const data = await response.json();
       console.log('Login successful:', data);
-      localStorage.setItem('userId', data.userId);
 
-      navigate('/');
-      window.location.reload();
+      if (data.userId === -1) {
+        setMessage('Login failed, try again');
+      }
+      else {
+        localStorage.setItem('userId', data.userId);
+        navigate('/');
+        window.location.reload();
+      }
       // Handle successful login, e.g., store user session, redirect to dashboard, etc.
     } else {
       const errorData = await response.json();
@@ -44,8 +50,10 @@ const Login = () => {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex',
-        flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+      <form onSubmit={handleSubmit} style={{
+        display: 'flex',
+        flexDirection: 'column', alignItems: 'center', gap: '10px'
+      }}>
         <div>
           <label htmlFor="username">Username: </label>
           <input
@@ -66,6 +74,7 @@ const Login = () => {
         </div>
         <button type="submit" className='Product-button'>Login</button>
       </form>
+      {message && <p>{message}</p>}
     </div>
   );
 };
