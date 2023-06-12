@@ -104,11 +104,12 @@ class Warehouse extends React.Component {
                             List of products
                             {this.state.products.map((product) => {
                                 return (
-                                    <div className="Card" key={product.id}>
-                                        <div className="Card-info">
-                                            <div className="Card-name">
-                                                name: {product.name}, id: {product.id}
-                                            </div>
+                                    <div className="Card" key={product.id} style={{height : "30px", minHeight:"20px"}}>
+                                        <div className="Card-name">
+                                            {product.name}
+                                        </div>
+                                        <div className="Card-name"> 
+                                        id: {product.id}
                                         </div>
                                     </div>
                                 );

@@ -31,21 +31,19 @@ def take_warehouse_products():
     product_id = request.json.get('product_id')
     quantity = request.json.get('quantity')
 
-    print(product_id)
-
     cursor.execute(
         'SELECT product_id, quantity FROM warehouse WHERE product_id = ?', (product_id, ))
     products = cursor.fetchone()
 
     if not products:
         conn.close()
-        return jsonify({'message': 'Error, no products found with this id'})
+        return jsonify({'error': 'Error, no products found with this id'}), 400
 
     current_quantity = products[1]
 
     if current_quantity < quantity:
         conn.close()
-        return jsonify({'message': 'Error, quantity is not enough'})
+        return jsonify({'error': 'Error, quantity is not enough'}), 400
 
     productJSON = {
         "id": products[0],

@@ -78,6 +78,7 @@ class Basket extends React.Component {
   }
 
   render() {
+
     const userId = localStorage.getItem('userId');
     const message = localStorage.getItem('message');
     if (message === null) {

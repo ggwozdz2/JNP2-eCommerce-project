@@ -188,7 +188,7 @@ a {
   background-color: var(--primary-color);
   color: var(--secondary-color);
   display: grid;
-  grid-template-columns: 4fr minmax(220px, 1fr);
+  grid-template-columns: 4fr minmax(240px, 1fr);
   grid-template-rows: 1fr;
   grid-template-areas: "left right";
   padding: 10px 0;
