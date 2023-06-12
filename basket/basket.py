@@ -86,8 +86,7 @@ def get_all_baskets():
 
     return jsonify(dataJSON)
 
-@app.route('/api/baskets/user-basket/<int:user_id>', methods=['GET'])
-def get_user_basket(user_id):
+def user_basket_json(user_id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
@@ -107,7 +106,32 @@ def get_user_basket(user_id):
         }
         dataJSON.append(basketJSON)
 
+    return dataJSON
+
+@app.route('/api/baskets/user-basket/<int:user_id>', methods=['GET'])
+def get_user_basket(user_id):
+    dataJSON = user_basket_json(user_id)
     return jsonify(dataJSON)
+
+@app.route('/api/baskets/submit-order/<int:user_id>', methods=['GET'])
+def submit_order(user_id):
+    dataJSON = user_basket_json(user_id)
+    total = 0
+    for basket in dataJSON:
+        total += basket['price']
+    if total > 0:
+        response = requests.post('http://localhost:4000/add-money', json={'userId': user_id, 'amount': -total})
+        if response.json()['message'] == 'Money added successfully':
+            conn = sqlite3.connect(DATABASE)
+            cursor = conn.cursor()
+            cursor.execute('DELETE FROM baskets WHERE userId = ?', (user_id,))
+            conn.commit()
+            conn.close()
+            return jsonify({'message': 'Order submitted successfully'})
+        else:
+            return jsonify({'message': 'Error, not enough money'})
+    else:
+        return jsonify({'message': 'Error, no products in basket'})
 
 if __name__ == '__main__':
     create_baskets_table()
