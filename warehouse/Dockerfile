@@ -17,5 +17,5 @@ COPY . .
 EXPOSE 8082
 
 # Run the Flask app
-CMD ["python", "warehouse.py"]
+CMD ["python3", "warehouse.py"]
 

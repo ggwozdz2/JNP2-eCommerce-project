@@ -17,5 +17,5 @@ COPY . .
 EXPOSE 4000
 
 # Run the Flask app
-CMD ["python", "users.py"]
+CMD ["python3", "users.py"]
 

@@ -49,6 +49,8 @@ services:
   front:
     build:
       context: ./front
+      args:
+        - REACT_APP_USERS=users-service:4000
     ports:
      - 3000:3000
     stop_signal: SIGINT
@@ -56,6 +58,3 @@ services:
       - BASKET=basket:8081
       - WAREHOUSE=warehouse:8082
       - PRODUCTS=products:8080
-      - USERS=users-service:4000
-
-

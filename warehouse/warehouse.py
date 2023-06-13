@@ -177,7 +177,6 @@ def start_consumer():
     channel.start_consuming()
 
 if __name__ == '__main__':
-    print(RABBIT)
     create_warehouse_table()
     # Create a thread
     thread = threading.Thread(target=start_consumer)

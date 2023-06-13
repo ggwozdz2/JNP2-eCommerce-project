@@ -17,5 +17,5 @@ COPY . .
 EXPOSE 8081
 
 # Run the Flask app
-CMD ["python", "basket.py"]
+CMD ["python3", "basket.py"]
 

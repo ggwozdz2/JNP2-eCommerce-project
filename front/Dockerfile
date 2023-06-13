@@ -1,5 +1,5 @@
 # Base image
-FROM node:14-alpine
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
@@ -12,6 +12,10 @@ RUN npm install
 
 # Copy the entire project
 COPY . .
+
+ARG REACT_APP_USERS
+
+ENV REACT_APP_USERS $REACT_APP_USERS
 
 # Build the React app
 RUN npm run build
