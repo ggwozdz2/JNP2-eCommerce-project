@@ -1,6 +1,12 @@
 # jnp2-amazing
 Project for JNP2 classes (Languages and programming tools 2), which was about writing microservices apps.
 
+Note: this is still an early version of the project, which is only for education purposes.
+
+It is a simple e-commerce app, which resembles Amazon. People can log in, add products to basket
+and try to buy them. Currently, users can just add money to themselves without any payment service (todo).
+Admin can also add products to warehouse.
+
 Technologies used:
 + Python (Flask)
 + React
@@ -17,3 +23,15 @@ App consists of following microservices:
 
 Diagram of communication between them:
 ![Diagram](diagram.png)
+
+Screenshots from the app:
+
++ Main site:
+![Main site](mainsite.png)
+
++ Basket:
+![Basket](basket.png)
+
++ Submitted order:
+![Order][order.png]
+
