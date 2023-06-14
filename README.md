@@ -33,5 +33,9 @@ Screenshots from the app:
 ![Basket](./images/basket.png)
 
 + Submitted order:
+<<<<<<< HEAD
 ![Order][./images/order.png]
 
+=======
+![Order](./images/order.png)
+>>>>>>> 8a5811e... Update README.md
