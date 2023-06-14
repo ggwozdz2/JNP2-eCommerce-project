@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const USERS = process.env.REACT_APP_USERS;
+
 const Login = () => {
+  console.log(USERS);
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

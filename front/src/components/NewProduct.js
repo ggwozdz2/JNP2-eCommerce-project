@@ -42,7 +42,7 @@ const NewProduct = () => {
       console.log('Product added:', data);
 
       if (data.message === 'Product created successfully') {
-        navigate('/add-warehouse');
+        navigate('/warehouse');
         window.location.reload();
       }
       else {

@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  rabbit:
+     image: rabbitmq:3.6.14-management
+     ports:
+       - 5672:5672
+       - 15672:15672
+
+  users-service:
+    build:
+      context: ./users-service
+    ports:
+      - 4000:4000
+    stop_signal: SIGINT
+    
+  products:
+    build:
+      context: ./product
+    ports:
+      - 8080:8080
+    stop_signal: SIGINT
+
+  warehouse:
+    build:
+      context: ./warehouse
+    ports:
+      - 8082:8082
+    stop_signal: SIGINT
+    depends_on:
+      - rabbit
+    environment:
+      - RABBIT=rabbit
+      
+  basket:
+    build:
+      context: ./basket
+    ports:
+      - 8081:8081
+    stop_signal: SIGINT
+    depends_on:
+      - rabbit
+    environment:
+      - RABBIT=rabbit
+      - WAREHOUSE=warehouse:8082
+      - PRODUCTS=products:8080
+      - USERS=users-service:4000
+
+  front:
+    build:
+      context: ./front
+      args:
+        - REACT_APP_USERS=users-service:4000
+    ports:
+     - 3000:3000
+    stop_signal: SIGINT
+    environment:
+      - BASKET=basket:8081
+      - WAREHOUSE=warehouse:8082
+      - PRODUCTS=products:8080
