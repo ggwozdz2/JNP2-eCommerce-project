@@ -22,16 +22,16 @@ App consists of following microservices:
 + Basket
 
 Diagram of communication between them:
-![Diagram](diagram.png)
+![Diagram](./images/diagram.png)
 
 Screenshots from the app:
 
 + Main site:
-![Main site](mainsite.png)
+![Main site](./images/mainsite.png)
 
 + Basket:
-![Basket](basket.png)
+![Basket](./images/basket.png)
 
 + Submitted order:
-![Order][order.png]
+![Order][./images/order.png]
 
