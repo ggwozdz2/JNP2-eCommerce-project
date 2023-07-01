@@ -1,5 +1,5 @@
 # jnp2-amazing
-Project for JNP2 classes (Languages and programming tools 2), which was about writing microservices apps.
+Project for JNP2 classes (Languages and programming tools 2) at the academic year 2022/23, which was about writing microservices apps.
 
 Note: this is still an early version of the project, which is only for education purposes.
 
